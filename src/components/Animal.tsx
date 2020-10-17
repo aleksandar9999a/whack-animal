@@ -4,7 +4,7 @@ import hole from './../assets/dirt.svg'
 
 
 @CustomElement({
-	selector: 'exf-animal'
+    selector: 'exf-animal'
 })
 export class Animal extends Component {
     @State('style') top: number = 200;
@@ -17,11 +17,27 @@ export class Animal extends Component {
     @Prop('style') dir: 'up' | 'down' = 'up';
     @Prop('style') speed: 'slow' | 'normal' | 'fast' = 'normal';
 
+    run: boolean = false;
+
+    start() {
+        this.run = true;
+
+        this.show()
+    }
+
+    stop() {
+        this.run = false;
+    }
+
     getPosition() {
         return this.top
     }
 
     show() {
+        if (!this.run) {
+            return;
+        }
+
         if (this.top <= 0) {
             this.hide()
             return;
@@ -33,6 +49,10 @@ export class Animal extends Component {
     }
 
     hide() {
+        if (!this.run) {
+            return;
+        }
+
         if (this.top >= 200) {
             this.show();
             return;
@@ -43,9 +63,9 @@ export class Animal extends Component {
         requestAnimationFrame(this.hide.bind(this))
     }
 
-	stylize() {
-		return (
-			<styles>
+    stylize() {
+        return (
+            <styles>
                 <style>
                     .animal {
                         {
@@ -100,13 +120,13 @@ export class Animal extends Component {
                         }
                     }
                 </style>
-			</styles>
-		)
-	}
+            </styles>
+        )
+    }
 
-	render() {
-		return (
-			<div className="animal">
+    render() {
+        return (
+            <div className="animal">
                 <div className="animal__wrapper">
                     <div className="mole">
                         <img src={mole}></img>
@@ -114,9 +134,9 @@ export class Animal extends Component {
                 </div>
 
                 <div className="hole">
-				    <img src={hole}></img>
+                    <img src={hole}></img>
                 </div>
-			</div>
-		)
-	}
+            </div>
+        )
+    }
 }
