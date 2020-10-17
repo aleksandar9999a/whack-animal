@@ -1,9 +1,7 @@
 import ExF, { Component, CustomElement, State } from 'exf-ts-beta';
 import { Animal } from './components/Animal';
+import { getRandomNumber } from './helpers/helpers';
 
-function getRandomArbitrary(min: number, max: number) {
-	return Math.floor(Math.random() * (max - min) + min)
-}
 
 @CustomElement({
 	selector: 'exf-app'
@@ -29,10 +27,10 @@ export class App extends Component {
 			return;
 		}
 
-		let randomIndex = getRandomArbitrary(0, animals.length);
+		let randomIndex = getRandomNumber(0, animals.length);
 
 		while (randomIndex === lastIndex) {
-			randomIndex = getRandomArbitrary(0, animals.length);
+			randomIndex = getRandomNumber(0, animals.length);
 		}
 
 		animals[randomIndex].show();
