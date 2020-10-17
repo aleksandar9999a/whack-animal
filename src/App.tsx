@@ -12,6 +12,8 @@ export class App extends Component {
 	@State('state') animals = Array(6).fill({ speed: 'slow' });
 	@State('state') scores: number = 0;
 	@State('state') isStarted: boolean = false;
+	gameDuration: number = 5000;
+	animationSpeed: number = 1000;
 
 	startAnimation() {
 		const animals = (this as any)._html.getElementsByClassName('animal');
@@ -19,7 +21,7 @@ export class App extends Component {
 
 		setTimeout(() => {
 			this.isStarted = false;
-		}, 5000)
+		}, this.gameDuration)
 	}
 
 	run(animals: Animal[], lastIndex: number = -1) {
@@ -27,17 +29,17 @@ export class App extends Component {
 			return;
 		}
 
-		let randomIndex = getRandomArbitrary(0, animals.length - 1);
+		let randomIndex = getRandomArbitrary(0, animals.length);
 
 		while (randomIndex === lastIndex) {
-			randomIndex = getRandomArbitrary(0, animals.length - 1);
+			randomIndex = getRandomArbitrary(0, animals.length);
 		}
 
 		animals[randomIndex].show();
 
 		setTimeout(() => {
 			this.run(animals, randomIndex)
-		}, 1000)
+		}, this.animationSpeed)
 	}
 
 	handleStart = () => {
