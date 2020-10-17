@@ -7,6 +7,11 @@ import hole from './../assets/dirt.svg'
     selector: 'exf-animal'
 })
 export class Animal extends Component {
+    @State('style') top: number = 85;
+
+    @Prop('style') speed: 'slow' | 'normal' | 'fast' = 'normal';
+    @Prop('state') onClick: () => void = () => {}
+
     width = 150;
     height = 100;
     animalWidth = 80;
@@ -15,11 +20,6 @@ export class Animal extends Component {
         normal: 4,
         fast: 6
     }
-
-    @State('style') top: number = 85;
-
-    @Prop('style') speed: 'slow' | 'normal' | 'fast' = 'normal';
-    @Prop('state') onClick: () => void = () => {}
 
     show() {
         if (this.top <= 0) {

@@ -11,32 +11,41 @@ export class App extends Component {
 	@State('state') scores: number = 0;
 	@State('state') isStarted: boolean = false;
 
+	animalElements: Animal[] = []
+
 	gameDuration: number = 5000;
 	showDuration: number = 1000;
 
-	run(animals: Animal[], lastIndex: number = -1) {
+	onCreate() {
+		this.animalElements = (this as any)._html.getElementsByClassName('animal');
+	}
+
+	run(lastIndex: number = -1) {
 		if (!this.isStarted) {
 			return;
 		}
 
-		let randomIndex = getRandomNumber(0, animals.length);
+		let randomIndex = getRandomNumber(0, this.animalElements.length);
+		let counter = 1;
 
-		while (randomIndex === lastIndex) {
-			randomIndex = getRandomNumber(0, animals.length);
+		while (randomIndex === lastIndex || counter > this.animalElements.length) {
+			randomIndex = getRandomNumber(0, this.animalElements.length);
+			counter++;
 		}
 
-		animals[randomIndex].show();
+		if (counter <= this.animalElements.length) {
+			this.animalElements[randomIndex].show();
+		}
 
 		setTimeout(() => {
-			this.run(animals, randomIndex)
+			this.run(randomIndex)
 		}, this.showDuration)
 	}
 
 	handleStart = () => {
 		this.isStarted = true;
 		this.scores = 0;
-		const animals = (this as any)._html.getElementsByClassName('animal');
-		this.run(animals)
+		this.run()
 
 		setTimeout(() => {
 			this.isStarted = false;
