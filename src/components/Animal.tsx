@@ -7,37 +7,21 @@ import hole from './../assets/dirt.svg'
     selector: 'exf-animal'
 })
 export class Animal extends Component {
-    @State('style') top: number = 200;
+    @State('style') top: number = 85;
     steps = {
         slow: 2,
         normal: 4,
         fast: 6
     }
 
-    @Prop('style') dir: 'up' | 'down' = 'up';
+    width = 150;
+    height = 100;
+    animalWidth = 80;
+
     @Prop('style') speed: 'slow' | 'normal' | 'fast' = 'normal';
-
-    run: boolean = false;
-
-    start() {
-        this.run = true;
-
-        this.show()
-    }
-
-    stop() {
-        this.run = false;
-    }
-
-    getPosition() {
-        return this.top
-    }
+    @Prop('state') onClick: () => void = () => {}
 
     show() {
-        if (!this.run) {
-            return;
-        }
-
         if (this.top <= 0) {
             this.hide()
             return;
@@ -49,12 +33,7 @@ export class Animal extends Component {
     }
 
     hide() {
-        if (!this.run) {
-            return;
-        }
-
-        if (this.top >= 200) {
-            this.show();
+        if (this.top >= 85) {
             return;
         }
 
@@ -70,14 +49,14 @@ export class Animal extends Component {
                     .animal {
                         {
                             'position': 'relative',
-                            'height': '230px',
-                            'width': '250px',
+                            'height': `${this.height}px`,
+                            'width': `${this.width}px`,
 
                             '.animal__wrapper': {
                                 'position': 'relative',
                                 'overflow': 'hidden',
-                                'height': '230px',
-                                'width': '250px',
+                                'height': `${this.height}px`,
+                                'width': `${this.width}px`,
                             },
 
                             '.mole': {
@@ -88,7 +67,7 @@ export class Animal extends Component {
 
                                 'img': {
                                     'margin': 'auto',
-                                    'width': '150px'
+                                    'width': `${this.animalWidth}px`
                                 }
                             },
 
@@ -99,7 +78,7 @@ export class Animal extends Component {
                                 'right': '0',
 
                                 'img': {
-                                    'width': '230px'
+                                    'width': `${this.width}px`
                                 }
                             },
 
@@ -128,7 +107,7 @@ export class Animal extends Component {
         return (
             <div className="animal">
                 <div className="animal__wrapper">
-                    <div className="mole">
+                    <div className="mole" onClick={this.onClick}>
                         <img src={mole}></img>
                     </div>
                 </div>
