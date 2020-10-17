@@ -10,17 +10,9 @@ export class App extends Component {
 	@State('state') animals = Array(6).fill({ speed: 'slow' });
 	@State('state') scores: number = 0;
 	@State('state') isStarted: boolean = false;
+
 	gameDuration: number = 5000;
-	animationSpeed: number = 1000;
-
-	startAnimation() {
-		const animals = (this as any)._html.getElementsByClassName('animal');
-		this.run(animals)
-
-		setTimeout(() => {
-			this.isStarted = false;
-		}, this.gameDuration)
-	}
+	showDuration: number = 1000;
 
 	run(animals: Animal[], lastIndex: number = -1) {
 		if (!this.isStarted) {
@@ -37,13 +29,18 @@ export class App extends Component {
 
 		setTimeout(() => {
 			this.run(animals, randomIndex)
-		}, this.animationSpeed)
+		}, this.showDuration)
 	}
 
 	handleStart = () => {
 		this.isStarted = true;
 		this.scores = 0;
-		this.startAnimation();
+		const animals = (this as any)._html.getElementsByClassName('animal');
+		this.run(animals)
+
+		setTimeout(() => {
+			this.isStarted = false;
+		}, this.gameDuration)
 	}
 
 	handleScoreIncrease = () => {
