@@ -3,6 +3,7 @@ import { ExFModule } from 'exf-ts-beta';
 import { App } from './App';
 import { Actions } from './components/Actions';
 import { Animal } from './components/Animal';
+import { Game } from './components/Game';
 import { Panel } from './components/Panel';
 
 ExFModule({
@@ -10,7 +11,8 @@ ExFModule({
 		App,
 		Animal,
 		Panel,
-		Actions
+		Actions,
+		Game
 	],
 	bootstraps: [
 		App

@@ -1,12 +1,27 @@
-import ExF, { Component, CustomElement, Prop } from 'exf-ts-beta';
+import ExF, { Component, CustomElement, State } from 'exf-ts-beta';
+import { Controller } from '../services/controller';
 
 
 @CustomElement({
-	selector: 'exf-actions'
+	selector: 'exf-actions',
+	dependencyInjection: true
 })
 export class Actions extends Component {
-    @Prop('style') isStarted: boolean = false;
-    @Prop('state') onStart: () => void = () => {};
+    @State('style') isStarted: boolean = false;
+	
+	constructor(private controller: Controller) {
+		super()
+	}
+
+	onCreate() {
+		this.controller.isStarted.subscribe(isStarted => {
+			this.isStarted = isStarted;
+		})
+	}
+
+	handleClick = () => {
+		this.controller.start();
+	}
 
 	stylize() {
 		return (
@@ -51,7 +66,7 @@ export class Actions extends Component {
 	render() {
 		return (
 			<div className="actions">
-                <button onClick={this.onStart}>Start</button>
+                <button onClick={this.handleClick}>Start</button>
             </div>
 		)
 	}

@@ -1,16 +1,17 @@
 import ExF, { Component, CustomElement, Prop, State } from 'exf-ts-beta';
 import mole from './../assets/mole.svg'
 import hole from './../assets/dirt.svg'
+import { Controller } from '../services/controller';
 
 
 @CustomElement({
-    selector: 'exf-animal'
+    selector: 'exf-animal',
+	dependencyInjection: true
 })
 export class Animal extends Component {
     @State('style') top: number = 85;
 
     @Prop('style') speed: 'slow' | 'normal' | 'fast' = 'normal';
-    @Prop('state') onClick: () => void = () => {}
 
     width = 150;
     height = 100;
@@ -19,6 +20,10 @@ export class Animal extends Component {
         slow: 2,
         normal: 4,
         fast: 6
+    }
+
+    constructor(private controller: Controller) {
+        super();
     }
 
     show() {
@@ -40,6 +45,10 @@ export class Animal extends Component {
         this.top = this.top + this.steps[this.speed];
 
         requestAnimationFrame(this.hide.bind(this))
+    }
+
+    handleClick = () => {
+        this.controller.increaseScores();
     }
 
     stylize() {
@@ -107,7 +116,7 @@ export class Animal extends Component {
         return (
             <div className="animal">
                 <div className="animal__wrapper">
-                    <div className="mole" onClick={this.onClick}>
+                    <div className="mole" onClick={this.handleClick}>
                         <img src={mole}></img>
                     </div>
                 </div>

@@ -1,11 +1,23 @@
-import ExF, { Component, CustomElement, State, Prop } from 'exf-ts-beta';
+import ExF, { Component, CustomElement, State } from 'exf-ts-beta';
+import { Controller } from '../services/controller';
 
 
 @CustomElement({
-	selector: 'exf-panel'
+	selector: 'exf-panel',
+	dependencyInjection: true
 })
 export class Panel extends Component {
-	@Prop('state') scores: number = 0;
+	@State('state') scores: number = 0;
+
+	constructor(private controller: Controller) {
+		super()
+	}
+
+	onCreate() {
+		this.controller.scores.subscribe(scores => {
+			this.scores = scores;
+		})
+	}
 
 	stylize() {
 		return (
